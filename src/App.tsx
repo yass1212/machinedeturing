@@ -49,10 +49,10 @@ const App = () => {
 // ------------------------------------------------------- RUBAN EDITABLE -------------------------------------------------------
   
 
-  // État pour gérer la visibilité du composant RubanEditable
+  // État pour gérer la visibilité du bouton avancer
   const [isAvancerPossible, setIsAvancerPossible] = useState(true);
 
-  // État pour gérer la visibilité du composant sauvegarder
+  // État pour gérer la visibilité du bouton sauvegarder
   const [isSauvegarderPossible, setIsSauvegarderPossible] = useState(true);
 
 
@@ -70,7 +70,7 @@ const App = () => {
 
   // Fonction pour basculer la visibilité du composant RubanEditable
   const avancerPossible = () => {
-    setIsAvancerPossible(!isAvancerPossible);  // Bascule la visibilité
+    setIsAvancerPossible(!isAvancerPossible);
   };
 
 
@@ -83,23 +83,18 @@ const App = () => {
 
     const [teteModif, setTeteModif] = useState(tete);
 
-    // Fonction pour convertir le tableau en une chaîne de texte séparée par des espaces
     const rubanAsString = ruban.join(' ');
 
     // État pour suivre la modification du texte
-    const [modifiedText, setModifiedText] = useState(rubanAsString);
+    const [texteModifie, setTexteModifie] = useState(rubanAsString);
 
-    // Fonction pour gérer la modification du texte
-    // const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //   setModifiedText(event.target.value);
-    // }; 
     // Fonction pour sauvegarder les modifications et mettre à jour le ruban
-    const handleSave = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const newText = event.target.value;
-      setModifiedText(newText);
+    const sauvegarderModifs = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const texte = event.target.value;
+      setTexteModifie(texte);
       // Divise le texte en un tableau avec les éléments séparés par des espaces
-      const updatedRuban = newText.split(' ').filter(Boolean);  // filter(Boolean) pour enlever les éléments vides
-      setRubanModif(updatedRuban);  // Mets à jour l'état ruban avec les nouvelles valeurs
+      const rubanMaj = texte.split(' ').filter(Boolean); 
+      setRubanModif(rubanMaj);  // Mets à jour l'état ruban avec les nouvelles valeurs
     };
 
     return (
@@ -107,8 +102,8 @@ const App = () => {
         
         {/* Champ texte pour entrer des éléments séparés par des espaces */}
         <textarea
-          value={modifiedText}
-          onChange={handleSave}
+          value={texteModifie}
+          onChange={sauvegarderModifs}
           rows={4}
           cols={50}
           style={{ fontSize: "16px", padding: "8px", borderRadius: "16px", border: "1px solid black", resize: "none", width: "80%" }}
@@ -287,12 +282,9 @@ const App = () => {
     // Récupérer la transition correspondant à l'état actuel et au symbole sous la tête
     const transition = transitions.find((el) => el.etat === etat && el.symbole === ruban[tete]);
 
-    console.log("transition : ", transition);
-
 
     //Si la transition n'existe pas, on arrête la machine
     if (!transition) {
-      console.log("plus de transition possible");
       avancerPossible();
       return;
     }
@@ -310,12 +302,9 @@ const App = () => {
     // Changer l'état
     setEtat(transition.etatSuivant);
 
-    console.log("etat : ", etat);
-
 
     etatsFinaux.forEach(etatF => {
       if (transition.etatSuivant === etatF) {
-        console.log("equivalent");
         <div style={{ marginTop: "10px", color: "#00CC00" }}>
           Etat final atteint, le mot est reconnu
         </div>
@@ -353,7 +342,7 @@ const App = () => {
           const file = e.target.files ? e.target.files[0] : null;
 
           if (!file?.name.endsWith('.mt')) {
-            console.log("Fichier non .mt");
+            alert("Le fichier sélectionné n'est pas au format .mt");
           } else {
 
             if (file) {
@@ -364,7 +353,7 @@ const App = () => {
                   }
               };
               reader.onerror = () => {
-                  console.error("Erreur lors de la lecture du fichier :", reader.error);
+                alert("Erreur lors de la lecture du fichier");
               };
               reader.readAsText(file);
               }
@@ -397,8 +386,6 @@ const App = () => {
   }, [fichier]);
   // traitement fichier
   function TraitementFichier(): void {
-
-    console.log("traitement");
 
       var champ = 1;
 
@@ -438,34 +425,14 @@ const App = () => {
           Ttransitions.push(ligne);
         }
 
-          //console.log(ligne)
-
-
-
-          // table.push({
-          //   etat: ligne,
-          //   symbole: "",
-          //   nouveauSymbole: "",
-          //   deplacement: "",
-          //   nouvelEtat: ""
-          // });
         }
 
       }
-
-
 
       setTableAlphabet(Talphabet);
       setBlank(Tblank);
       setEtatInitial(Tetatinitial);
       setEtatsFinaux(Tetatsfinaux);
-      //setTransitions(Ttransitions);
-
-
-  
-      // setTable(table);
-
-      //console.log(table[0].etat);
   }
 
 
@@ -479,7 +446,6 @@ const App = () => {
       const transition = transitions.find((el) => el.etat === etatActuel && el.symbole === rubanActuel[teteActuelle]);
 
       if (!transition) {
-        console.log("plus de transition possible");
         setIsAvancerPossible(false);
         break;
       }
