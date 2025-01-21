@@ -22,8 +22,6 @@ const App = () => {
   // fichier
   const [fichier, setFichier] = useState('');
   // données fichier
-  const [tableEtats, setTableEtats] = useState(['']);
-  const [tableSymboles, setTableSymboles] = useState(['']);
   const [tableAlphabet, setTableAlphabet] = useState(['']);
 
   const [blank, setBlank] = useState('');
@@ -457,8 +455,6 @@ const App = () => {
 
 
 
-      setTableEtats(Tetats);
-      setTableSymboles(Tsymboles);
       setTableAlphabet(Talphabet);
       setBlank(Tblank);
       setEtatInitial(Tetatinitial);
