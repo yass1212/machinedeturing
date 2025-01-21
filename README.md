@@ -1,66 +1,65 @@
+# Machine de Turing
+
+### Yassine Benkirane
+
+TP1 de Maths pour l'info
+
+Simulateur d'une Machine de Turing basé sur un fichier .mt
+
+L'exécution se fait pas à pas ou automatiquement jusqu'à la fin pour avoir le résultat.
 
 
 
+## Accès
+
+### En ligne
+
+[machinedeturing.vercel.app](https://machinedeturing.vercel.app)
+
+### En local
+
+Il faut nodeJS et npm
+
+#### Dans le dossier, lancer les commandes :
+`npm install`
+
+`npm run build`
 
 
-vite app
+## Infos
 
-faut juste npm ? vite sera installé auto ?
-
-je retire node_modules ?
-
+app React via Vite
+Écrit en TypeScript
 
 
+Le fichier représentant la Machine de Turing doit finir par .mt et être de cette forme :
 
-
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
 ```
+/** States **/
+q0
+q1
+q2
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+/** Input symbols **/
+a
+b
+c
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+/** Tape alphabet **/
+a
+b
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+/** Blank symbol **/
+#
+
+/** Initial state **/
+q0
+
+/** Final states **/
+q2
+q3
+
+/** Transitions **/
+q0,a->q2,A,R
+q1,a->q3,A,R
 ```
